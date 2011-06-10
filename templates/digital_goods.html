@@ -1,0 +1,34 @@
+<html>
+    <head>
+        <title>{{ title }}</title>
+    </head>
+    <body>
+        <h1>{{ title }}</h1>
+        <p>Select an item from our lovely catalog and checkout with PayPal!</p>
+        <form action='/set_ec' METHOD='POST'>
+
+            {% for key, value in catalog.items %}
+
+              {% if key not in purchases %}
+                <input type='radio' name='item_id' value='{{ key }}' /> {{ value.description }} (<span id='{{ key }}_price'>${{ value.price }}</span>)<br />
+              {% else %}
+                <input type='radio' name='item_id' value='{{ key }}' /> {{ value.description }} (<span id='{{ key }}_price'><a target='_blank' href='/purchases?sid={{ sid }}&item_id={{ key }}'>already purchased for ${{ value.price}}</a></span>)<br />
+              {% endif %}
+
+            {% endfor %}
+
+            <input type='hidden' name='sid' value='{{ sid }}'/>
+
+            <input id= 'submitBtn' type='submit' name='submit' src='https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif' border='0' align='top' alt='Check out with PayPal'/>
+
+        </form>
+
+        <script type="text/javascript" src="https://www.paypalobjects.com/js/external/dg.js"></script>
+        <script> 
+            var dg = new PAYPAL.apps.DGFlow({ 
+                // the HTML ID of the form submit button which calls setEC
+                trigger: "submitBtn"
+            }); 
+        </script>
+    </body>
+</html>

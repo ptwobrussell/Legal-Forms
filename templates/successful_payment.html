@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <title>{{ title }}</title>
+    </head>
+    <body>
+        <script> 
+
+            // Dynamically swap out the price tag with a 'purchased' link that the user can click to access the document.
+
+            var price = top.document.getElementById('{{ item_id }}_price').innerHTML;
+
+            var purchasedLink = "<a target='_blank' href='/purchases?sid={{ sid }}&item_id={{ item_id }}'>already purchased for " + price  + "</a>";
+
+            top.document.getElementById('{{ item_id }}_price').innerHTML = purchasedLink;
+
+            // Provide a simple message
+
+            alert("Your purchase was successful. Use the 'purchased' link on the catalog page to access it.");
+
+            // Close out the purchase
+
+            top.dg.closeFlow();
+
+        </script>
+    </body>
+</html>
